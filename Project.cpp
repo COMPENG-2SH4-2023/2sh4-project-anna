@@ -1,13 +1,15 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
-
+#include "GameMechs.h"
 
 using namespace std;
 
 #define DELAY_CONST 100000
 
 bool exitFlag;
+//other global variables:
+GameMechs* gameMechanics;
 
 void Initialize(void);
 void GetInput(void);
@@ -23,7 +25,7 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(gameMechanics->getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -42,28 +44,84 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     exitFlag = false;
+    //initialize gameMechanics object on the heap
+    gameMechanics = new GameMechs();
+
 }
 
 void GetInput(void)
 {
+	if(MacUILib_hasChar() != 0)
+	{
+		gameMechanics->setInput(MacUILib_getChar());
+	}
    
 }
 
 void RunLogic(void)
-{
-    
+{/*
+	if(gameMechanics->getInput() != 0) //if there is usable input, run this logic
+	{
+		switch(gameMechanics->getInput())
+		{
+			case ' ': //exit
+				gameMechanics->setExitTrue();
+				break;
+			case 'a': //move to the left
+				if(mode == UP || mode == DOWN || mode == STOP)
+				{
+					mode = LEFT;
+					break;
+				}
+				else
+				{
+					break;
+				}
+			case 'd': //move to the right
+				if(mode == UP || mode == DOWN || mode == STOP)
+				{
+					mode = RIGHT;
+					break;
+				}
+				else
+				{
+					break;
+				}
+			case 's': //move down
+				if(mode == LEFT || mode == RIGHT || mode == STOP)
+				{
+					mode = DOWN;
+					break;
+				}
+				else
+				{
+					break;
+				}
+			case 'w': //move up
+				if(mode == LEFT || mode == RIGHT || mode == STOP)
+				{
+					mode = UP;
+					break;
+				}
+				else
+				{
+					break
+				}
+		}
+	}
+   */ 
 }
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
     //recall: there are 10 rows, i.e. i-positions or movements on the y-axis, and 20 columns, i.e. j-positions or movements on the x-axis.
-    char matrix[10][20];
+    char matrix[gameMechanics->getBoardSizeY()][gameMechanics->getBoardSizeX()];
     objPos test = objPos(4, 3, '!'); //test object with x-pos=4, y-pos =3, symbol of '!'
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < gameMechanics->getBoardSizeY(); i++)
     {
-	    for(int j = 0; j < 20; j++)
+	    for(int j = 0; j < gameMechanics->getBoardSizeX(); j++)
 	    {
-		    if(i == 0 || i == 9 || j == 0 || j == 19)
+		    if(i == 0 || i == gameMechanics->getBoardSizeY() - 1 || j == 0 || j == gameMechanics->getBoardSizeX() - 1)
 		    {
 			    matrix[i][j] = '#';
 		    }
@@ -78,9 +136,9 @@ void DrawScreen(void)
 	    }
     }
 
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < gameMechanics->getBoardSizeY(); i++)
     {
-	    for(int j = 0; j < 20; j++)
+	    for(int j = 0; j < gameMechanics->getBoardSizeX(); j++)
 	    {
 		    MacUILib_printf("%c", matrix[i][j]);
 	    }
