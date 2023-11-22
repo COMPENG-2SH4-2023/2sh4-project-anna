@@ -53,11 +53,12 @@ void RunLogic(void)
 {
     
 }
-
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
+    //recall: there are 10 rows, i.e. i-positions or movements on the y-axis, and 20 columns, i.e. j-positions or movements on the x-axis.
     char matrix[10][20];
+    objPos test = objPos(4, 3, '!'); //test object with x-pos=4, y-pos =3, symbol of '!'
     for(int i = 0; i < 10; i++)
     {
 	    for(int j = 0; j < 20; j++)
@@ -65,6 +66,10 @@ void DrawScreen(void)
 		    if(i == 0 || i == 9 || j == 0 || j == 19)
 		    {
 			    matrix[i][j] = '#';
+		    }
+		    else if(j == test.x && i == test.y)
+		    {
+			    matrix[i][j] = test.symbol;
 		    }
 		    else
 		    {
