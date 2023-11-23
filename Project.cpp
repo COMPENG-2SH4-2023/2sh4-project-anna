@@ -78,8 +78,19 @@ void RunLogic(void)
         playerObject -> updatePlayerDir();
         //Move player
         playerObject -> movePlayer();
+	
 	}
-    
+	//debug-use keys
+    	if(gameMechanics->getInput() == 'p')
+	{
+		gameMechanics->incrementScore();
+		//gameMechanics->clearInput();
+	}
+	if(gameMechanics->getInput() == 'l')
+	{
+		gameMechanics->setLoseFlag();
+	}
+
 }
 void DrawScreen(void)
 {
@@ -120,6 +131,8 @@ void DrawScreen(void)
 	    }
 	    MacUILib_printf("\n");
     }
+    MacUILib_printf("The score is %d and loseFlag is set to %d\n", gameMechanics->getScore(), gameMechanics->getLoseFlagStatus());
+																  
 
 
 }
@@ -135,4 +148,5 @@ void CleanUp(void)
     MacUILib_clearScreen();    
   
     MacUILib_uninit();
+    //do we need to call the destructor explicitly? called automatically at end of program?
 }

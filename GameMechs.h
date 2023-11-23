@@ -32,7 +32,7 @@ class GameMechs
         ~GameMechs(); //added 
         bool getExitFlagStatus();
         void setExitTrue();
-	void getLoseFlagStatus(); //aded
+	bool getLoseFlagStatus(); //added
 	void setLoseFlag(); //added
         char getInput();
         void setInput(char this_input);

@@ -5,7 +5,7 @@ GameMechs::GameMechs()
 	boardSizeX = 30;
 	boardSizeY = 15;
 	exitFlag = false;
-	loseFlag = true;
+	loseFlag = false;
 	score = 0;
 	input = 0;
 
@@ -16,7 +16,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 	boardSizeX = boardX;
 	boardSizeY = boardY;
 	exitFlag = false;
-	loseFlag = true;
+	loseFlag = false;
 	score = 0;
 	input = 0;
 
@@ -77,4 +77,14 @@ int GameMechs::getScore()
 void GameMechs::incrementScore()
 {
 	score++;
+}
+
+bool GameMechs::getLoseFlagStatus()
+{
+	return loseFlag;
+}
+
+void GameMechs::setLoseFlag()
+{
+	loseFlag = 1;
 }
