@@ -97,7 +97,7 @@ void DrawScreen(void)
     MacUILib_clearScreen();    
     //recall: there are 10 rows, i.e. i-positions or movements on the y-axis, and 20 columns, i.e. j-positions or movements on the x-axis.
     char matrix[gameMechanics->getBoardSizeY()][gameMechanics->getBoardSizeX()];
-    objPos test = objPos(4, 3, '!'); //test object with x-pos=4, y-pos =3, symbol of '!'
+    //objPos test = objPos(4, 3, '!'); //test object with x-pos=4, y-pos =3, symbol of '!'
     objPos tempPos; // temporarory position of Player Object
     playerObject -> getPlayerPos(tempPos);
     for(int i = 0; i < gameMechanics->getBoardSizeY(); i++)
@@ -112,10 +112,12 @@ void DrawScreen(void)
             {
                 matrix[i][j] = tempPos.symbol;
             }
-		    else if(j == test.x && i == test.y)
+		    /*
+			else if(j == test.x && i == test.y)
 		    {
 			    matrix[i][j] = test.symbol;
 		    }
+			*/
 		    else
 		    {
 			    matrix[i][j] = ' ';
