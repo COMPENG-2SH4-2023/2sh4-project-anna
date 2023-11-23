@@ -2,6 +2,7 @@
 #include "MacUILib.h"
 #include "objPos.h"
 #include "GameMechs.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -10,6 +11,7 @@ using namespace std;
 bool exitFlag;
 //other global variables:
 GameMechs* gameMechanics;
+Player* playerObject;
 
 void Initialize(void);
 void GetInput(void);
@@ -46,6 +48,8 @@ void Initialize(void)
     exitFlag = false;
     //initialize gameMechanics object on the heap
     gameMechanics = new GameMechs();
+    //intialize playerObject on the heap
+    playerObject = new Player(gameMechanics);
 
 }
 
@@ -59,7 +63,7 @@ void GetInput(void)
 }
 
 void RunLogic(void)
-{/*
+{
 	if(gameMechanics->getInput() != 0) //if there is usable input, run this logic
 	{
 		switch(gameMechanics->getInput())
@@ -67,49 +71,15 @@ void RunLogic(void)
 			case ' ': //exit
 				gameMechanics->setExitTrue();
 				break;
-			case 'a': //move to the left
-				if(mode == UP || mode == DOWN || mode == STOP)
-				{
-					mode = LEFT;
-					break;
-				}
-				else
-				{
-					break;
-				}
-			case 'd': //move to the right
-				if(mode == UP || mode == DOWN || mode == STOP)
-				{
-					mode = RIGHT;
-					break;
-				}
-				else
-				{
-					break;
-				}
-			case 's': //move down
-				if(mode == LEFT || mode == RIGHT || mode == STOP)
-				{
-					mode = DOWN;
-					break;
-				}
-				else
-				{
-					break;
-				}
-			case 'w': //move up
-				if(mode == LEFT || mode == RIGHT || mode == STOP)
-				{
-					mode = UP;
-					break;
-				}
-				else
-				{
-					break
-				}
+			default:
+                break;
 		}
+        //Update player direction
+        playerObject -> updatePlayerDir();
+        //Move player
+        playerObject -> movePlayer();
 	}
-   */ 
+    
 }
 void DrawScreen(void)
 {
@@ -117,6 +87,8 @@ void DrawScreen(void)
     //recall: there are 10 rows, i.e. i-positions or movements on the y-axis, and 20 columns, i.e. j-positions or movements on the x-axis.
     char matrix[gameMechanics->getBoardSizeY()][gameMechanics->getBoardSizeX()];
     objPos test = objPos(4, 3, '!'); //test object with x-pos=4, y-pos =3, symbol of '!'
+    objPos tempPos; // temporarory position of Player Object
+    playerObject -> getPlayerPos(tempPos);
     for(int i = 0; i < gameMechanics->getBoardSizeY(); i++)
     {
 	    for(int j = 0; j < gameMechanics->getBoardSizeX(); j++)
@@ -125,6 +97,10 @@ void DrawScreen(void)
 		    {
 			    matrix[i][j] = '#';
 		    }
+            else if(j == tempPos.x && i == tempPos.y) //get player data for printing
+            {
+                matrix[i][j] = tempPos.symbol;
+            }
 		    else if(j == test.x && i == test.y)
 		    {
 			    matrix[i][j] = test.symbol;
@@ -144,6 +120,7 @@ void DrawScreen(void)
 	    }
 	    MacUILib_printf("\n");
     }
+
 
 }
 
