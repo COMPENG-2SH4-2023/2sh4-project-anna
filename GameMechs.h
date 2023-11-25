@@ -25,6 +25,7 @@ class GameMechs
 	int score; //added	
         int boardSizeX;
         int boardSizeY;
+	objPos foodPos; //position of the snake food
 
     public:
         GameMechs();
@@ -42,6 +43,8 @@ class GameMechs
         int getBoardSizeY();
 	int getScore(); //added
      	void incrementScore(); //added 
+	void generateFood(objPos blockOff); //random food generation, accepts position of player to not use
+	void getFoodPos(objPos &returnPos); //obtains current position of food
 
 };
 
