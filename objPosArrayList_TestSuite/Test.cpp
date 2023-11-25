@@ -353,6 +353,101 @@ void testRemoveTail_5Element()
 	// The destructor will be called automatically for stack-allocated objects
 }
 
+// Test 6 - Insert Head Remove Tail
+void testInsertHRemoveT_2Element()
+{
+	objPos currentPos;
+	objPos samplePos{2, 5, 'a'};
+	objPos samplePos2{1,1,'b'};
+
+	// Insert 2 sample elements
+	objPosArrayList thisList;
+	thisList.insertHead(samplePos);
+	thisList.insertHead(samplePos2);
+
+	//Remove 1 Tail element
+	thisList.removeTail();
+
+	int expectedSize = 1;
+	int actualSize = thisList.getSize();
+		
+	// First check the list size is 1
+	ASSERT_EQUAL(expectedSize, actualSize);
+
+	bool expectedCheck = true;
+	bool actualCheck;
+
+	// Then check whether the head element is what we have inserted.
+	thisList.getHeadElement(currentPos);
+	actualCheck = samplePos2.isPosEqual(&currentPos);
+
+	ASSERT_EQUAL(expectedCheck, actualCheck);
+
+
+	// Next, check whether the tail element is also the head element in a list of 1 element.
+	thisList.getTailElement(currentPos);
+	actualCheck = samplePos2.isPosEqual(&currentPos);
+
+	ASSERT_EQUAL(expectedCheck, actualCheck);
+
+
+	// Finally, chech whether the element at index = 0 is also the head element in a list of 1 element
+	// Then check whether the head element is what we have inserted.
+	thisList.getElement(currentPos, 0);
+	actualCheck = samplePos2.isPosEqual(&currentPos);
+
+	ASSERT_EQUAL(expectedCheck, actualCheck);
+
+	// The destructor will be called automatically for stack-allocated objects
+}
+
+// Test 7 - Insert Tail Remove Head
+void testInsertTRemoveH_2Element()
+{
+	objPos currentPos;
+	objPos samplePos{2, 5, 'a'};
+	objPos samplePos2{1,1,'b'};
+
+	// Insert 2 sample elements
+	objPosArrayList thisList;
+	thisList.insertTail(samplePos);
+	thisList.insertTail(samplePos2);
+
+	//Remove 1 Tail element
+	thisList.removeHead();
+
+	int expectedSize = 1;
+	int actualSize = thisList.getSize();
+		
+	// First check the list size is 1
+	ASSERT_EQUAL(expectedSize, actualSize);
+
+	bool expectedCheck = true;
+	bool actualCheck;
+
+	// Then check whether the head element is what we have inserted.
+	thisList.getHeadElement(currentPos);
+	actualCheck = samplePos2.isPosEqual(&currentPos);
+
+	ASSERT_EQUAL(expectedCheck, actualCheck);
+
+
+	// Next, check whether the tail element is also the head element in a list of 1 element.
+	thisList.getTailElement(currentPos);
+	actualCheck = samplePos2.isPosEqual(&currentPos);
+
+	ASSERT_EQUAL(expectedCheck, actualCheck);
+
+
+	// Finally, chech whether the element at index = 0 is also the head element in a list of 1 element
+	// Then check whether the head element is what we have inserted.
+	thisList.getElement(currentPos, 0);
+	actualCheck = samplePos2.isPosEqual(&currentPos);
+
+	ASSERT_EQUAL(expectedCheck, actualCheck);
+
+	// The destructor will be called automatically for stack-allocated objects
+}
 
 
 
@@ -368,7 +463,8 @@ bool runAllTests(int argc, char const *argv[]) {
 	s.push_back(CUTE(testRemoveHead_5Element));
 	s.push_back(CUTE(testRemoveTail_1Element));
 	s.push_back(CUTE(testRemoveTail_5Element));
-	
+	s.push_back(CUTE(testInsertHRemoveT_2Element));
+	s.push_back(CUTE(testInsertTRemoveH_2Element));
 
 
 

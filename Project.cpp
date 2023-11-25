@@ -113,10 +113,6 @@ void DrawScreen(void)
             {
                 matrix[i][j] = tempPos.symbol;
             }
-		   // else if(j == test.x && i == test.y)
-		   // {
-		//	    matrix[i][j] = test.symbol;
-		 //   }
 		    else
 		    {
 			    matrix[i][j] = ' ';
