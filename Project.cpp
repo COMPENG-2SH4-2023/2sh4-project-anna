@@ -50,16 +50,20 @@ void Initialize(void)
     gameMechanics = new GameMechs();
     //intialize playerObject on the heap
     playerObject = new Player(gameMechanics);
-    gameMechanics->generateFood( ); //generates snakefood, passes in player position to avoid
+    objPos *no_food_here = new objPos();
+    playerObject->getPlayerPos(*no_food_here);
+    gameMechanics->generateFood(*no_food_here); //generates snakefood, passes in player position to avoid
+						//I think we then need to delete no_food_here in here?
 
 }
 
 void GetInput(void)
 {
+	
 	if(MacUILib_hasChar() != 0)
 	{
 		gameMechanics->setInput(MacUILib_getChar());
-	}
+	} 
    
 }
 
@@ -96,11 +100,11 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
-    //recall: there are 10 rows, i.e. i-positions or movements on the y-axis, and 20 columns, i.e. j-positions or movements on the x-axis.
-    char matrix[gameMechanics->getBoardSizeY()][gameMechanics->getBoardSizeX()];
-    //objPos test = objPos(4, 3, '!'); //test object with x-pos=4, y-pos =3, symbol of '!'
+    char matrix[gameMechanics->getBoardSizeY()][gameMechanics->getBoardSizeX()]; //creates matrix with set board size
     objPos tempPos; // temporarory position of Player Object
     playerObject -> getPlayerPos(tempPos);
+    objPos temp_food; // temporary variable to get food object
+    gameMechanics->getFoodPos(temp_food); //get the position of the snake food
     for(int i = 0; i < gameMechanics->getBoardSizeY(); i++)
     {
 	    for(int j = 0; j < gameMechanics->getBoardSizeX(); j++)
@@ -109,10 +113,14 @@ void DrawScreen(void)
 		    {
 			    matrix[i][j] = '#';
 		    }
-            else if(j == tempPos.x && i == tempPos.y) //get player data for printing
-            {
-                matrix[i][j] = tempPos.symbol;
-            }
+            	    else if(j == tempPos.x && i == tempPos.y) //get player data for printing
+            	    {
+                	    matrix[i][j] = tempPos.symbol;
+            	    }
+		    else if(j == temp_food.x && i == temp_food.y) //get snake food data for printing
+		    {
+			    matrix[i][j] = temp_food.symbol;
+		    }
 		    else
 		    {
 			    matrix[i][j] = ' ';
@@ -145,5 +153,6 @@ void CleanUp(void)
     MacUILib_clearScreen();    
   
     MacUILib_uninit();
-    //do we need to call the destructor explicitly? called automatically at end of program?
+    delete gameMechanics;
+    delete playerObject;
 }
