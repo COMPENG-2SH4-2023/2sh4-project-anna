@@ -91,6 +91,14 @@ void RunLogic(void)
 		gameMechanics->setLoseFlag();
 		gameMechanics->clearInput();
 	}
+	if(gameMechanics->getInput() == 'f') //change the food position
+	{
+		objPos *no_food_here = new objPos();
+    		playerObject->getPlayerPos(*no_food_here);
+    		gameMechanics->generateFood(*no_food_here); //generates snakefood, passes in player position to avoid
+		gameMechanics->clearInput();
+	
+	}
 	//Update player direction
         playerObject -> updatePlayerDir();
         //Move player
