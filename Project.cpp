@@ -79,22 +79,22 @@ void RunLogic(void)
 			default:
                 break;
 		}
-        //Update player direction
+	}
+	//debug-use keys
+    	if(gameMechanics->getInput() == 'p') //give a point
+	{
+		gameMechanics->incrementScore();
+		gameMechanics->clearInput();
+	}
+	if(gameMechanics->getInput() == 'l') //set loseflag on
+	{
+		gameMechanics->setLoseFlag();
+		gameMechanics->clearInput();
+	}
+	//Update player direction
         playerObject -> updatePlayerDir();
         //Move player
         playerObject -> movePlayer();
-	
-	}
-	//debug-use keys
-    	if(gameMechanics->getInput() == 'p')
-	{
-		gameMechanics->incrementScore();
-		//gameMechanics->clearInput();
-	}
-	if(gameMechanics->getInput() == 'l')
-	{
-		gameMechanics->setLoseFlag();
-	}
 
 }
 void DrawScreen(void)

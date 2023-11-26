@@ -91,8 +91,6 @@ void GameMechs::setLoseFlag()
 
 void GameMechs::generateFood(objPos blockOff)
 {
-	int x_bit[boardSizeX - 2] = {0}; 
-	int y_bit[boardSizeY - 2] = {0};	
 	srand(time(NULL));
 	int got_one = 0;
 	while(!got_one)
