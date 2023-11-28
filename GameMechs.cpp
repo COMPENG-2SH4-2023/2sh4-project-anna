@@ -89,19 +89,35 @@ void GameMechs::setLoseFlag()
 	loseFlag = 1;
 }
 
-void GameMechs::generateFood(objPos blockOff)
+void GameMechs::generateFood(objPosArrayList* blockOff)
 {
 	srand(time(NULL));
-	int got_one = 0;
+	int got_one = 0; // indicates if unblocked position found
+	int x_candidate,y_candidate; // random x and y pos
+	objPos blockPos; // position of block
+	int blockSize = blockOff->getSize(); // size of player area blocked off
+	int i=0;
+
 	while(!got_one)
 	{
-		int x_candidate = (rand() % (boardSizeX - 3)) + 1;
-		int y_candidate = (rand() % (boardSizeY - 3)) + 1;
-		if(blockOff.x == x_candidate && blockOff.y == y_candidate)
+		// Generates Random Food Position
+		x_candidate = (rand() % (boardSizeX - 2))+1;
+		y_candidate = (rand() % (boardSizeY - 2))+1;
+
+		// Checks if new position same as player position
+		for(i=0; i<blockSize;i++)
 		{
-			continue; // go back to start of loop and try again
+			blockOff->getElement(blockPos,i);
+
+			// if block matches break to generate new pos
+			if(blockPos.x == x_candidate && blockPos.y == y_candidate)
+			{
+				break;
+			}
 		}
-		else
+
+		// if no block matches: generates food
+		if(i == blockSize)
 		{
 			foodPos.x = x_candidate;
 			foodPos.y = y_candidate;
@@ -109,7 +125,6 @@ void GameMechs::generateFood(objPos blockOff)
 			got_one = 1;
 		}
 	}
-
 }
 
 void GameMechs::getFoodPos(objPos &returnPos)

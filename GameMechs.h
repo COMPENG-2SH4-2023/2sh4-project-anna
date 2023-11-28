@@ -43,7 +43,7 @@ class GameMechs
         int getBoardSizeY();
 	int getScore(); //added
      	void incrementScore(); //added 
-	void generateFood(objPos blockOff); //random food generation, accepts position of player to not use
+	void generateFood(objPosArrayList* blockoff); //random food generation, accepts position of player to not use
 	void getFoodPos(objPos &returnPos); //obtains current position of food
 
 };

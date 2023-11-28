@@ -54,7 +54,8 @@ void Initialize(void)
 
     //test setup
     objPos tempPos{-1, -1, 'o'};
-    gameMechanics->generateFood(tempPos);
+	objPosArrayList* playerBody = playerObject->getPlayerPos();
+    gameMechanics->generateFood(playerBody);
 
 
 //old food generation routine...
