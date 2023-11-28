@@ -28,6 +28,11 @@ int objPosArrayList::getSize()
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
+    if(sizeList == sizeArray) //FULL
+    {
+        cout << "size list == size array" << endl;
+        return;
+    }
     for(int i=sizeList; i>0; i--)
     {
         aList[i].setObjPos(aList[i-1]);
@@ -51,6 +56,10 @@ void objPosArrayList::insertTail(objPos thisPos)
 
 void objPosArrayList::removeHead()
 {
+    if(sizeList == 0) // if no elements
+    {
+        return;
+    }
     for(int i=0; i<=sizeList;i++)
     {
         aList[i].setObjPos(aList[i+1]);
@@ -61,6 +70,10 @@ void objPosArrayList::removeHead()
 
 void objPosArrayList::removeTail()
 {
+    if(sizeList == 0) // if no elements
+    {
+        return;
+    }
     aList[sizeList].setObjPos(0,0,0);
     sizeList--;
     cout << "TAIL REMOVED" << endl;
