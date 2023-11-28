@@ -115,6 +115,24 @@ void Player::movePlayer()
     {
         currHead.x = 1;
     }
+    //want to check if new location of currHead is the same as any elements already in snake body
+    for(int i = 1; i < playerPosList->getSize(); i++)
+    {
+
+	   objPos tempBody;  
+	   playerPosList->getElement(tempBody, i);
+	   if(tempBody.x == currHead.x && tempBody.y == currHead.y)
+	   {
+		mainGameMechsRef->setLoseFlag();
+		mainGameMechsRef->setExitTrue();
+	   }
+
+	    
+
+    }
+	
+
+
     //new current head should be inserted to head of list
     playerPosList->insertHead(currHead);
 
@@ -134,6 +152,8 @@ void Player::movePlayer()
            mainGameMechsRef->generateFood(tempPos);
 	   mainGameMechsRef->incrementScore();
    }
+
+
 
 }
 
