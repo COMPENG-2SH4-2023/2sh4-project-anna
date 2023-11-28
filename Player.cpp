@@ -141,17 +141,16 @@ void Player::movePlayer()
     mainGameMechsRef->getFoodPos(currFood);
 
     // if the snake head is not the same position as the food
-   if(currHead.x != currFood.x || currHead.y != currFood.y)
-   {
-    //then remove the tail 
-    playerPosList->removeTail();  
-   }
-   else
-   {
-	   objPos tempPos{-1, -1, 'o'}; //CHANGE THIS
-           mainGameMechsRef->generateFood(tempPos);
-	   mainGameMechsRef->incrementScore();
-   }
+    if(currHead.x != currFood.x || currHead.y != currFood.y)
+    {
+        //then remove the tail 
+        playerPosList->removeTail();  
+    }
+    else
+    {
+        mainGameMechsRef->generateFood(playerPosList);
+	    mainGameMechsRef->incrementScore();
+    }
 
 
 
