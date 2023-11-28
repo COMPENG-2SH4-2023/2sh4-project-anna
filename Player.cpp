@@ -12,6 +12,12 @@ Player::Player(GameMechs* thisGMRef)
     playerPosList = new objPosArrayList(); //array list for snake
     playerPosList->insertHead(tempPos); //sets the head of the snake
 
+    //for debugging: insert another 4 segments
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
+    playerPosList->insertHead(tempPos);
+
 }
 
 
