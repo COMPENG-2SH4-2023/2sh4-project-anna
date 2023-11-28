@@ -12,11 +12,6 @@ Player::Player(GameMechs* thisGMRef)
     playerPosList = new objPosArrayList(); //array list for snake
     playerPosList->insertHead(tempPos); //sets the head of the snake
 
-    //for debugging: insert another 4 segments
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
 
 }
 
@@ -120,6 +115,24 @@ void Player::movePlayer()
     {
         currHead.x = 1;
     }
+    //want to check if new location of currHead is the same as any elements already in snake body
+    for(int i = 1; i < playerPosList->getSize(); i++)
+    {
+
+	   objPos tempBody;  
+	   playerPosList->getElement(tempBody, i);
+	   if(tempBody.x == currHead.x && tempBody.y == currHead.y)
+	   {
+		mainGameMechsRef->setLoseFlag();
+		mainGameMechsRef->setExitTrue();
+	   }
+
+	    
+
+    }
+	
+
+
     //new current head should be inserted to head of list
     playerPosList->insertHead(currHead);
 
@@ -133,6 +146,14 @@ void Player::movePlayer()
     //then remove the tail 
     playerPosList->removeTail();  
    }
+   else
+   {
+	   objPos tempPos{-1, -1, 'o'}; //CHANGE THIS
+           mainGameMechsRef->generateFood(tempPos);
+	   mainGameMechsRef->incrementScore();
+   }
+
+
 
 }
 
