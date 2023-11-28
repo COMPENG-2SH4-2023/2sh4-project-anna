@@ -120,10 +120,19 @@ void Player::movePlayer()
     {
         currHead.x = 1;
     }
-   //new current head should be inserted to head of list
-   playerPosList->insertHead(currHead);
-   //then remove the tail
-   playerPosList->removeTail();   
+    //new current head should be inserted to head of list
+    playerPosList->insertHead(currHead);
+
+    playerPosList->getHeadElement(currHead);
+    objPos currFood;
+    mainGameMechsRef->getFoodPos(currFood);
+
+    // if the snake head is not the same position as the food
+   if(currHead.x != currFood.x || currHead.y != currFood.y)
+   {
+    //then remove the tail 
+    playerPosList->removeTail();  
+   }
 
 }
 
