@@ -1,6 +1,7 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
+#include "objPosArrayList.h"
 #include "GameMechs.h"
 #include "Player.h"
 
@@ -50,9 +51,16 @@ void Initialize(void)
     gameMechanics = new GameMechs();
     //intialize playerObject on the heap
     playerObject = new Player(gameMechanics);
-    objPos *no_food_here = new objPos();
-    playerObject->getPlayerPos(*no_food_here);
-    gameMechanics->generateFood(*no_food_here); //generates snakefood, passes in player position to avoid
+
+    //test setup
+    objPos tempPos{-1, -1, 'o'};
+    gameMechanics->generateFood(tempPos);
+
+
+//old food generation routine...
+    //objPos *no_food_here = new objPos();
+    //playerObject->getPlayerPos(*no_food_here);
+    //gameMechanics->generateFood(*no_food_here); //generates snakefood, passes in player position to avoid
 						//I think we then need to delete no_food_here in here?
 
 }
@@ -91,14 +99,6 @@ void RunLogic(void)
 		gameMechanics->setLoseFlag();
 		gameMechanics->clearInput();
 	}
-	if(gameMechanics->getInput() == 'f') //change the food position
-	{
-		objPos *no_food_here = new objPos();
-    		playerObject->getPlayerPos(*no_food_here);
-    		gameMechanics->generateFood(*no_food_here); //generates snakefood, passes in player position to avoid
-		gameMechanics->clearInput();
-	
-	}
 	//Update player direction
         playerObject -> updatePlayerDir();
         //Move player
@@ -108,23 +108,37 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
+    bool drawn;
     char matrix[gameMechanics->getBoardSizeY()][gameMechanics->getBoardSizeX()]; //creates matrix with set board size
-    objPos tempPos; // temporarory position of Player Object
-    playerObject -> getPlayerPos(tempPos);
+
+    objPosArrayList* playerBody = playerObject->getPlayerPos(); //new var to hold reference to whole player body
+    objPos tempBody;
+
     objPos temp_food; // temporary variable to get food object
     gameMechanics->getFoodPos(temp_food); //get the position of the snake food
+
     for(int i = 0; i < gameMechanics->getBoardSizeY(); i++)
     {
 	    for(int j = 0; j < gameMechanics->getBoardSizeX(); j++)
 	    {
+		    drawn = false;
+		    for(int k = 0; k < playerBody->getSize(); k++)
+		    {
+			    playerBody->getElement(tempBody, k);
+			    if(tempBody.x == j && tempBody.y == i)
+			    {
+				    matrix[i][j] = tempBody.symbol;
+				    drawn = true;
+				    break;
+			    }
+		    }
+
+		    if(drawn) continue; //if player body was drawn don't do anything below
+
 		    if(i == 0 || i == gameMechanics->getBoardSizeY() - 1 || j == 0 || j == gameMechanics->getBoardSizeX() - 1)
 		    {
 			    matrix[i][j] = '#';
 		    }
-            	    else if(j == tempPos.x && i == tempPos.y) //get player data for printing
-            	    {
-                	    matrix[i][j] = tempPos.symbol;
-            	    }
 		    else if(j == temp_food.x && i == temp_food.y) //get snake food data for printing
 		    {
 			    matrix[i][j] = temp_food.symbol;
