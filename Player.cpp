@@ -132,6 +132,7 @@ void Player::movePlayer()
    {
 	   objPos tempPos{-1, -1, 'o'}; //CHANGE THIS
            mainGameMechsRef->generateFood(tempPos);
+	   mainGameMechsRef->incrementScore();
    }
 
 }
