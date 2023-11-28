@@ -12,11 +12,6 @@ Player::Player(GameMechs* thisGMRef)
     playerPosList = new objPosArrayList(); //array list for snake
     playerPosList->insertHead(tempPos); //sets the head of the snake
 
-    //for debugging: insert another 4 segments
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
 
 }
 
@@ -135,7 +130,7 @@ void Player::movePlayer()
    }
    else
    {
-	   objPos tempPos{-1, -1, 'o'};
+	   objPos tempPos{-1, -1, 'o'}; //CHANGE THIS
            mainGameMechsRef->generateFood(tempPos);
    }
 
