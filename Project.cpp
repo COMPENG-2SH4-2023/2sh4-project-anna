@@ -104,6 +104,8 @@ void RunLogic(void)
         //Move player
         playerObject -> movePlayer();
 
+
+
 }
 void DrawScreen(void)
 {

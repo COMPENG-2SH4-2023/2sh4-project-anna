@@ -133,6 +133,11 @@ void Player::movePlayer()
     //then remove the tail 
     playerPosList->removeTail();  
    }
+   else
+   {
+	   objPos tempPos{-1, -1, 'o'};
+           mainGameMechsRef->generateFood(tempPos);
+   }
 
 }
 
