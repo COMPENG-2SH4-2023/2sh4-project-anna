@@ -68,6 +68,7 @@ void Player::updatePlayerDir()
     }       
 }
 
+
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
@@ -115,44 +116,60 @@ void Player::movePlayer()
     {
         currHead.x = 1;
     }
+    
     //want to check if new location of currHead is the same as any elements already in snake body
-    for(int i = 1; i < playerPosList->getSize(); i++)
-    {
-
-	   objPos tempBody;  
-	   playerPosList->getElement(tempBody, i);
-	   if(tempBody.x == currHead.x && tempBody.y == currHead.y)
-	   {
+	if(checkPlayerCollision()==true)
+	{
 		mainGameMechsRef->setLoseFlag();
 		mainGameMechsRef->setExitTrue();
-	   }
-
-	    
-
-    }
-	
-
-
+	}
+    
     //new current head should be inserted to head of list
     playerPosList->insertHead(currHead);
 
+    // if food consumed
+    if(checkFoodConsumption() == true)
+    {
+        mainGameMechsRef->generateFood(playerPosList); //generate new food
+	    mainGameMechsRef->incrementScore(); // increment score
+    }
+    else
+    {
+        // remove the tail 
+        playerPosList->removeTail();  
+    }
+}
+
+
+bool Player::checkFoodConsumption()
+{
+    objPos currHead; //holds position information of current head
     playerPosList->getHeadElement(currHead);
     objPos currFood;
     mainGameMechsRef->getFoodPos(currFood);
 
     // if the snake head is not the same position as the food
-    if(currHead.x != currFood.x || currHead.y != currFood.y)
+    if(currHead.x == currFood.x && currHead.y == currFood.y)
     {
-        //then remove the tail 
-        playerPosList->removeTail();  
+        return true;
     }
-    else
+    return false;
+}
+
+bool Player::checkPlayerCollision()
+{
+    objPos tempBody; 
+    objPos currHead; //holds position information of current head
+    playerPosList->getHeadElement(currHead); 
+
+    for(int i = 1; i < playerPosList->getSize(); i++)
     {
-        mainGameMechsRef->generateFood(playerPosList);
-	    mainGameMechsRef->incrementScore();
+	   playerPosList->getElement(tempBody, i);
+	   if(tempBody.x == currHead.x && tempBody.y == currHead.y)
+	   {
+            return true;
+	   }
     }
-
-
-
+    return false;
 }
 
