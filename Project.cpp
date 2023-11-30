@@ -87,7 +87,7 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
-    MacUILib_printf("Welcome to the Snake Feeding Frezy Game! Press w to move snake up, s for down, a for left, and d for right. To quit, press the spacebar.\n");
+    MacUILib_printf("Welcome to the Snake Feeding Frenzy Game! Press w to move snake up, s for down, a for left, and d for right. To quit, press the spacebar.\n");
     bool drawn; //this flag is used in the logic routine for drawing the snake body
     char matrix[gameMechanics->getBoardSizeY()][gameMechanics->getBoardSizeX()]; //creates matrix with set board size
 
