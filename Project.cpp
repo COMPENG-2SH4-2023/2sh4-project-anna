@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#define DELAY_CONST 300000
+#define DELAY_CONST 150000
 
 bool exitFlag;
 //other global variables:
@@ -178,7 +178,7 @@ void CleanUp(void)
 	if(gameMechanics->getLoseFlagStatus() == 1 && gameMechanics->getExitFlagStatus() == 1)
 	{
 		MacUILib_clearScreen();
-		MacUILib_printf("You lose!");
+		MacUILib_printf("Game ended. You scored: %d", gameMechanics->getScore());
 	}
 	else
 	{
