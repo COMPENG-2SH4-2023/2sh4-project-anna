@@ -1,6 +1,6 @@
 #include "GameMechs.h"
 
-GameMechs::GameMechs()
+GameMechs::GameMechs() //this constructor creates a game of default board size
 {
 	boardSizeX = 30;
 	boardSizeY = 15;
@@ -11,7 +11,7 @@ GameMechs::GameMechs()
 
 }
 
-GameMechs::GameMechs(int boardX, int boardY)
+GameMechs::GameMechs(int boardX, int boardY) //this constructor creates a game with a specified size and
 {
 	boardSizeX = boardX;
 	boardSizeY = boardY;
@@ -24,72 +24,72 @@ GameMechs::GameMechs(int boardX, int boardY)
 }
 
 // do you need a destructor?
-GameMechs::~GameMechs(){}
+GameMechs::~GameMechs(){} //yes
 
 
-bool GameMechs::getExitFlagStatus()
+bool GameMechs::getExitFlagStatus() //returns exit flag status
 {
 	return exitFlag;
 
 }
 
-char GameMechs::getInput()
+char GameMechs::getInput() //returns the current input
 {
 	return input;
 }
 
-int GameMechs::getBoardSizeX()
+int GameMechs::getBoardSizeX() //returns board size in the x-direction
 {
 	return boardSizeX;
 
 }
 
-int GameMechs::getBoardSizeY()
+int GameMechs::getBoardSizeY() //returns board size in the y-directions
 {
 	return boardSizeY;
 
 }
 
 
-void GameMechs::setExitTrue()
+void GameMechs::setExitTrue() //sets exit to true so the game ends
 {
 	exitFlag = 1;
 
 }
 
-void GameMechs::setInput(char this_input)
+void GameMechs::setInput(char this_input) //sets the input
 {
 	input = this_input;
 
 }
 
-void GameMechs::clearInput()
+void GameMechs::clearInput() //clears the input
 {
 	input = 0;
 
 }
 
-int GameMechs::getScore()
+int GameMechs::getScore() //returns the score
 {
 	return score;
 }
 
-void GameMechs::incrementScore()
+void GameMechs::incrementScore() //adds one to the score each call
 {
 	score++;
 }
 
-bool GameMechs::getLoseFlagStatus()
+bool GameMechs::getLoseFlagStatus() //returns whehter the game has been lost
 {
 	return loseFlag;
 }
 
-void GameMechs::setLoseFlag()
+void GameMechs::setLoseFlag() //sets the flag to 1 for a lost game
 {
 	loseFlag = 1;
 }
 
-void GameMechs::generateFood(objPosArrayList* blockOff)
+void GameMechs::generateFood(objPosArrayList* blockOff) //takes in the list of snake body segments to avoid, and generates a location for new snake food that excludes the snake body locations
 {
 	srand(time(NULL));
 	int got_one = 0; // indicates if unblocked position found
@@ -127,7 +127,7 @@ void GameMechs::generateFood(objPosArrayList* blockOff)
 	}
 }
 
-void GameMechs::getFoodPos(objPos &returnPos)
+void GameMechs::getFoodPos(objPos &returnPos) //returns the current position of the food 
 {
 	returnPos = foodPos;
 

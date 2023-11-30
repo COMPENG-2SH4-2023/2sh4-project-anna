@@ -47,31 +47,20 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     exitFlag = false;
-    //initialize gameMechanics object on the heap
-    gameMechanics = new GameMechs();
-    //intialize playerObject on the heap
-    playerObject = new Player(gameMechanics);
+    gameMechanics = new GameMechs(); //initialize gameMechanics object on the heap
+    playerObject = new Player(gameMechanics); //intialize playerObject on the heap
 
-    //test setup
-    objPos tempPos{-1, -1, 'o'};
-	objPosArrayList* playerBody = playerObject->getPlayerPos();
-    gameMechanics->generateFood(playerBody);
-
-
-//old food generation routine...
-    //objPos *no_food_here = new objPos();
-    //playerObject->getPlayerPos(*no_food_here);
-    //gameMechanics->generateFood(*no_food_here); //generates snakefood, passes in player position to avoid
-						//I think we then need to delete no_food_here in here?
+	objPosArrayList* playerBody = playerObject->getPlayerPos(); //gets list of player body segments to avoid when generating food
+    	gameMechanics->generateFood(playerBody); //generates new snake food while avoiding snake body
 
 }
 
 void GetInput(void)
 {
 	
-	if(MacUILib_hasChar() != 0)
+	if(MacUILib_hasChar() != 0) //if there is a valid character input from the keyboard
 	{
-		gameMechanics->setInput(MacUILib_getChar());
+		gameMechanics->setInput(MacUILib_getChar()); //gets the keyboard character for the gamemechanics object
 	} 
    
 }
@@ -82,28 +71,15 @@ void RunLogic(void)
 	{
 		switch(gameMechanics->getInput())
 		{
-			case ' ': //exit
+			case ' ': //this is the user key to end the game and exit
 				gameMechanics->setExitTrue();
 				break;
 			default:
                 break;
 		}
 	}
-	//debug-use keys
-    	if(gameMechanics->getInput() == 'p') //give a point
-	{
-		gameMechanics->incrementScore();
-		gameMechanics->clearInput();
-	}
-	if(gameMechanics->getInput() == 'l') //set loseflag on
-	{
-		gameMechanics->setLoseFlag();
-		gameMechanics->clearInput();
-	}
-	//Update player direction
-        playerObject -> updatePlayerDir();
-        //Move player
-        playerObject -> movePlayer();
+        playerObject -> updatePlayerDir(); //Update player direction
+        playerObject -> movePlayer(); //move the player object on the board
 
 
 
@@ -112,7 +88,7 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();    
     MacUILib_printf("Welcome to the Snake Feeding Frezy Game! Press w to move snake up, s for down, a for left, and d for right. To quit, press the spacebar.\n");
-    bool drawn;
+    bool drawn; //this flag is used in the logic routine for drawing the snake body
     char matrix[gameMechanics->getBoardSizeY()][gameMechanics->getBoardSizeX()]; //creates matrix with set board size
 
     objPosArrayList* playerBody = playerObject->getPlayerPos(); //new var to hold reference to whole player body
@@ -125,10 +101,10 @@ void DrawScreen(void)
     {
 	    for(int j = 0; j < gameMechanics->getBoardSizeX(); j++)
 	    {
-		    drawn = false;
+		    drawn = false; 
 		    for(int k = 0; k < playerBody->getSize(); k++)
 		    {
-			    playerBody->getElement(tempBody, k);
+			    playerBody->getElement(tempBody, k); //checking every location for snake body segments
 			    if(tempBody.x == j && tempBody.y == i)
 			    {
 				    matrix[i][j] = tempBody.symbol;
@@ -139,22 +115,22 @@ void DrawScreen(void)
 
 		    if(drawn) continue; //if player body was drawn don't do anything below
 
-		    if(i == 0 || i == gameMechanics->getBoardSizeY() - 1 || j == 0 || j == gameMechanics->getBoardSizeX() - 1)
+		    if(i == 0 || i == gameMechanics->getBoardSizeY() - 1 || j == 0 || j == gameMechanics->getBoardSizeX() - 1) //draws static border of game
 		    {
-			    matrix[i][j] = '#';
+			    matrix[i][j] = '#'; 
 		    }
 		    else if(j == temp_food.x && i == temp_food.y) //get snake food data for printing
 		    {
 			    matrix[i][j] = temp_food.symbol;
 		    }
-		    else
+		    else //any place on board that does not have some other symbol should be blank
 		    {
 			    matrix[i][j] = ' ';
 		    }
 	    }
     }
 
-    for(int i = 0; i < gameMechanics->getBoardSizeY(); i++)
+    for(int i = 0; i < gameMechanics->getBoardSizeY(); i++) //this loop prints the finished matrix to the screen
     {
 	    for(int j = 0; j < gameMechanics->getBoardSizeX(); j++)
 	    {
@@ -162,7 +138,7 @@ void DrawScreen(void)
 	    }
 	    MacUILib_printf("\n");
     }
-    MacUILib_printf("Your score: %d", gameMechanics->getScore(), gameMechanics->getLoseFlagStatus());
+    MacUILib_printf("Your score: %d", gameMechanics->getScore()); //show user their current score 
 																  
 
 
@@ -176,7 +152,7 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-	if(gameMechanics->getLoseFlagStatus() == 1 && gameMechanics->getExitFlagStatus() == 1)
+	if(gameMechanics->getLoseFlagStatus() == 1 && gameMechanics->getExitFlagStatus() == 1) //this condition is met if the snake has touched itself and thus loseflag is enabled
 	{
 		MacUILib_clearScreen();
 		MacUILib_printf("Game ended. You scored: %d", gameMechanics->getScore());
@@ -188,6 +164,6 @@ void CleanUp(void)
 	}
   
     MacUILib_uninit();
-    delete gameMechanics;
+    delete gameMechanics; //deleting heap variables
     delete playerObject;
 }
