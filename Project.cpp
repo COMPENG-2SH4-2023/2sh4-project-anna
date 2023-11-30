@@ -111,6 +111,7 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();    
+    MacUILib_printf("Welcome to the Snake Feeding Frezy Game! Press w to move snake up, s for down, a for left, and d for right. To quit, press the spacebar.\n");
     bool drawn;
     char matrix[gameMechanics->getBoardSizeY()][gameMechanics->getBoardSizeX()]; //creates matrix with set board size
 
@@ -161,7 +162,7 @@ void DrawScreen(void)
 	    }
 	    MacUILib_printf("\n");
     }
-    MacUILib_printf("The score is %d and loseFlag is set to %d\n", gameMechanics->getScore(), gameMechanics->getLoseFlagStatus());
+    MacUILib_printf("Your score: %d", gameMechanics->getScore(), gameMechanics->getLoseFlagStatus());
 																  
 
 
