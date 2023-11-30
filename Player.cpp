@@ -1,6 +1,6 @@
 #include "Player.h"
 
-
+// construct player
 Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
@@ -11,24 +11,22 @@ Player::Player(GameMechs* thisGMRef)
     tempPos.setObjPos(mainGameMechsRef->getBoardSizeX()/2,mainGameMechsRef->getBoardSizeY()/2,'*'); //temp object to be used for head
     playerPosList = new objPosArrayList(); //array list for snake
     playerPosList->insertHead(tempPos); //sets the head of the snake
-
-
 }
 
-
+// destructor
 Player::~Player()
 {
     // delete any heap members here
 	delete playerPosList; //only have one position list to delete
 }
 
+// return the reference to the playerPos arrray list
 objPosArrayList* Player::getPlayerPos()
 {
 	return playerPosList;
-    
-	// return the reference to the playerPos arrray list
 }
 
+// updates player direction based on user input
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic 
@@ -68,15 +66,15 @@ void Player::updatePlayerDir()
     }       
 }
 
-
+// prcesses direction, heads border, updates lose flag, and player size
 void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
-    //PROCESSING DIRECTION
-    
+ 
     objPos currHead; //holds position information of current head
     playerPosList->getHeadElement(currHead);
 
+    //PROCESSING DIRECTION
     switch(myDir)
     {
         case UP:
@@ -140,7 +138,7 @@ void Player::movePlayer()
     }
 }
 
-
+// returns bool indicating if food has bee consumed
 bool Player::checkFoodConsumption()
 {
     objPos currHead; //holds position information of current head
@@ -156,6 +154,7 @@ bool Player::checkFoodConsumption()
     return false;
 }
 
+// returns bool indicating if player has collided with itself
 bool Player::checkPlayerCollision()
 {
     objPos tempBody; 
