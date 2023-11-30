@@ -1,8 +1,6 @@
 #include "objPosArrayList.h"
 
-// Paste your CUTE Tested implementation here.
-// Paste your CUTE Tested implementation here.
-// Paste your CUTE Tested implementation here.
+// set default objPos Array List
 objPosArrayList::objPosArrayList()
 {
     sizeList = 0;
@@ -10,16 +8,19 @@ objPosArrayList::objPosArrayList()
     aList = new objPos[ARRAY_MAX_CAP];
 }
 
+// destructor
 objPosArrayList::~objPosArrayList()
 {
     delete[] aList;
 }
 
+// return size of list
 int objPosArrayList::getSize()
 {
     return sizeList;
 }
 
+// insert head object at head position
 void objPosArrayList::insertHead(objPos thisPos)
 {
     if(sizeList == sizeArray) //FULL
@@ -34,6 +35,7 @@ void objPosArrayList::insertHead(objPos thisPos)
     sizeList++;
 }
 
+// insert tail object at tail position
 void objPosArrayList::insertTail(objPos thisPos)
 {
     if(sizeList == sizeArray) //FULL
@@ -44,6 +46,7 @@ void objPosArrayList::insertTail(objPos thisPos)
     sizeList++;
 }
 
+// remove head object from head position
 void objPosArrayList::removeHead()
 {   
     if(sizeList == 0) // if no elements
@@ -57,6 +60,7 @@ void objPosArrayList::removeHead()
     sizeList--;
 }
 
+// remove tail object from tail position
 void objPosArrayList::removeTail()
 {
     if(sizeList == 0) // if no elements
@@ -67,16 +71,19 @@ void objPosArrayList::removeTail()
     sizeList--;
 }
 
+// gets head element and sets in returnPos
 void objPosArrayList::getHeadElement(objPos &returnPos)
 {
     aList[0].getObjPos(returnPos);
 }
 
+// gets tail element and sets in returnPos
 void objPosArrayList::getTailElement(objPos &returnPos)
 {
     aList[sizeList-1].getObjPos(returnPos);
 }
 
+// gets element at given index and sets in returnPos
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
     aList[index].getObjPos(returnPos);
